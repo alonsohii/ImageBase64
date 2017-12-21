@@ -1,0 +1,17 @@
+ {
+    "name": "upload-img-demo",
+    "version": "1.0.0",
+    "main": "app.js",
+    "license": "MIT",
+    "dependencies": {
+        "bluebird": "^2.10.2",
+        "body-parser": "^1.14.0",
+        "express": "^4.13.3",
+        "file-type": "^3.0.0",
+        "jimp": "^0.2.8",
+        "jquery": "^2.1.4",
+        "lodash": "^3.10.1",
+        "materialize-css": "^0.97.1",
+        "multer": "^1.0.3"
+      }
+}

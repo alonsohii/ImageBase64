@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>Upload Image Demo</title>
     <script src="js/jquery.min.js"></script>
@@ -32,49 +33,77 @@
     <div class="row img-preview"></div>
 
     <script>
-        $(function () {
-            $('#form1').on('submit', function(event){
+        $(function() {
+            $('#form1').on('submit', function(event) {
                 event.preventDefault();
 
                 var data = new FormData(this);
 
-                data.append( 'pics', $('input[name="pics"]')[0].files);
+                data.append('pics', $('input[name="pics"]')[0].files);
 
                 $('.progress').css({
-                    display:'block'
+                    display: 'block'
                 });
 
                 $.ajax({
-                    type:'POST',
+                    type: 'POST',
                     url: $(this).attr('action'),
-                    data:data,
-                    cache:false,
+                    data: data,
+                    cache: false,
                     contentType: false,
                     processData: false,
-                    success:function(data){
+                    success: function(data) {
+  debugger;
 
-                        for(var i=0;i<data.length;i++){
-                            var template =
-                                '<div class="col m4"><div class="card"><div class="card-image"><img src="'
-                                + data[i] + '"></div></div></div>';
+                        for (var i = 0; i < data.nombre.length; i++) {
 
-                                $('.img-preview').append(template);
+                         var template = null;
+                      
+
+                               toDataURL('http://localhost:8888/'+data.nombre[i].filename ,  function(dataUrl) {
+
+                                   template =
+                                   '<div class="col m4"><div class="card"><div class="card-image"><img src="' + dataUrl + '"></div></div></div>';
+                                           $('.img-preview').append(template);
+                                    })
+
+
+                         
                         }
 
                         $('.progress').css({
-                            display:'none'
+                            display: 'none'
                         });
                     },
-                    error: function(err){
+                    error: function(err) {
                         $('.progress').css({
-                            display:'none'
+                            display: 'none'
                         });
                     }
                 });
 
             })
         })
+
+        function toDataURL(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    callback(reader.result);
+                }
+                reader.readAsDataURL(xhr.response);
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            xhr.send();
+        }
+
+        toDataURL('uploads/d50c83cc0c6523b4d3f6085295c953e0', function(dataUrl) {
+            console.log('RESULT:', dataUrl)
+        })
     </script>
 
+</body>
 
-</body></html>
+</html>

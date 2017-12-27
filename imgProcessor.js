@@ -9,7 +9,7 @@ let Jimp = require('jimp')
 
 module.exports = {
     convertImgs(files){
-
+console.log(files);
         let promises = [];
 
         _.forEach(files, (file)=>{

@@ -40,6 +40,15 @@ app.get('/', (req, res, next)=>{
     res.sendFile(__dirname+'/main.html');
 });
 
+
+app.get('/master', (req, res, next)=>{
+    res.sendFile(__dirname+'/master.html');
+});
+
+app.get('/demo', (req, res, next)=>{
+    res.sendFile(__dirname+'/index.html');
+});
+
 app.use(express.static(__dirname + '/public'));
 
 app.post('/uploadImg', upload, (req, res, next)=>{

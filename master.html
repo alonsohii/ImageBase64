@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multiple DnD Uploader</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type = "text/javascript" src = "../music/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#drop').change(function(event){
+          files = event.target.files;
+          $('#drop').css('display', 'none');
+          for(var i = 0, len = files.length; i < len; i++) {
+            file = files[i];
+            if((file.fileName+"").substring((file.fileName+"").length-4,(file.fileName+"").length)=='.mp3'){
+            $.ajax({
+              type: "POST",
+              url: "uploader.php?id="+i,
+              contentType: "multipart/form-data",
+              headers: {
+                "X-File-Name" : file.fileName,
+                "X-File-Size" : file.fileSize,
+                "X-File-Type" : file.type
+              },
+              beforeSend:  function() {
+                $('#info').append('<li class="indicator"><span class="label">File Name :</span> '+file.fileName+' | <span class="label">Size :</span> ' + file.fileSize + ' | <img id="item'+i+'" src="loading.gif" /></li>');
+              },
+              processData: false,
+              data: file,
+              success: function(data){
+                $('#item'+data).attr('src', 'check.png');
+              },error: function(data){
+                $('#info').append('Error: ' + data + '<br />');
+              }
+            });
+            }else{
+              $('#info').append('Error: Incorrect file type. Looking for .mp3');
+            }
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="drop">
+      <h1>Drop files here</h1>
+      <p>To add them as attachments</p>
+      <input type="file" multiple="true" id="filesUpload" />
+    </div>
+    <div id="info">
+    </div>
+  </body>
+</html>

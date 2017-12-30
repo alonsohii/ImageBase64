@@ -5,18 +5,31 @@
        .zoneupload small { position: absolute; margin: -20px 0 0 10px }
        .zoneupload #activite { color: blue }
        .zoneupload #send { position: absolute; right: 2px; bottom: 2px }
+	   .thumbnailc {
+
+    overflow: auto;
+    white-space: nowrap;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    height: 110px;
+    width: 550px;
+
+	   }
 </style>
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/materialize.min.js"></script>
 
-    <link rel="stylesheet" href="css/materialize.min.css">
-<!-- VERY SIMPLE FORM  -->
+  
+<!--   <link rel="stylesheet" href="css/materialize.min.css">  VERY SIMPLE FORM  -->
 <fieldset class="zoneupload">
        <legend>Subir imagen</legend>
        <form method="post"   action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data">
                <input   type="hidden" name="post" value="file">
                <input   type="file" multiple="" name="pics" id="pics" class="pics">
+                  <div   class="thumbnailc" id="imagenes" ></div>
                       <small>Drag and drop a file here</small>
                <input type="submit" value="Subir" class="waves-effect waves-light btn" id="send">
                <br>
@@ -24,9 +37,9 @@
                <span  class="file-path validate" id="activite"></span>
        </form>
 </fieldset>
-   <div id="imagenes" ></div>
 
 
+  <div></div>
 
 
 <!-- JAVASCRIPT FOR COLOR CHANGE AND AUTO SUBMIT -->
@@ -41,7 +54,7 @@
                       
                 getBase64($('input[name="pics"]')[0].files[0], function(data){
 	                template =
-	                  '<div class="col m4"><div class="card"><div class="card-image"><img height="200"  src="' + data + '"></div></div></div>';
+	                  '<img height="100" height="10%"  src="' + data + '">';
 	                 $('#imagenes').append(template);
 	                  $('#activite').text('Previsualizado');
                 });

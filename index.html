@@ -1,5 +1,5 @@
 <style type="text/css">
-       .zoneupload { position: relative; width: 300px; background: gray; border: 1px solid gray; padding: 1px; }
+    .zoneupload { position: relative; width: 300px; background: gray; border: 1px solid gray; padding: 1px; }
        .zoneupload legend { color: white; font-size: 15px; background: gray }
        .zoneupload .pics { height: 260px; width: 350px; border: none; -webkit-appearance: none; background: white url(upload.png) center center no-repeat;  }
        .zoneupload small { position: absolute; margin: -20px 0 0 10px }
@@ -14,50 +14,115 @@
     text-align: center;
     padding: 14px;
     text-decoration: none;
-    height: 110px;
-    width: 550px;
+    height: 130px;
+    width: 300;
 
 	   }
+	 .thumbnailc img {
+   border: 5px solid #c2d6d6;
+
+	 }
+
+
+
+.inputDnD .form-control-file {
+  position: relative;
+  width: 300;
+  height: 200px;
+  min-height: 6em;
+  outline: none;
+  visibility: hidden;
+  cursor: pointer;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px solid #fff;
+          box-shadow: 0 0 5px solid #fff;
+}
+.inputDnD .form-control-file:before {
+  content: attr(data-title);
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 100%;
+  min-height: 6em;
+  line-height: 2em;
+  padding-top: 1.5em;
+  opacity: 1;
+  visibility: visible;
+  text-align: center;
+  border: 0.25em dashed #3399ff;
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+.inputDnD .form-control-file:hover:before {
+  border-style: solid;
+  -webkit-box-shadow: inset 0px 0px 0px 0.25em #3399ff;
+          box-shadow: inset 0px 0px 0px 0.25em #3399ff;
+}
+
+
 </style>
 
-    <script src="js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 
-  
 <!--   <link rel="stylesheet" href="css/materialize.min.css">  VERY SIMPLE FORM  -->
-<fieldset class="zoneupload">
-       <legend>Subir imagen</legend>
-       <form method="post"   action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data">
-               <input   type="hidden" name="post" value="file">
-               <input   type="file" multiple="" name="pics" id="pics" class="pics">
-                  <div   class="thumbnailc" id="imagenes" ></div>
-                      <small>Drag and drop a file here</small>
-               <input type="submit" value="Subir" class="waves-effect waves-light btn" id="send">
-               <br>
-        
-               <span  class="file-path validate" id="activite"></span>
-       </form>
-</fieldset>
+<div class="inputDnD">
+    <legend>Subir imagen</legend>
+    <form method="post" action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data">
+        <input type="hidden" name="post" value="file">
+        <input type="file" multiple="" name="pics" id="pics" class="form-control-file text-primary font-weight-bold ">
+        <br>
+        <input type="submit" value="Subir" class="waves-effect waves-light btn" id="send">
+
+        <span class="file-path validate" id="activite"></span>
+    </form>
+</div>
 
 
-  <div></div>
+
+<div class="thumbnailc" id="imagenes"></div>
+
+
 
 
 <!-- JAVASCRIPT FOR COLOR CHANGE AND AUTO SUBMIT -->
 <script type="text/javascript">
-       // Auto send file when input val change
+    // Auto send file when input val change
+       var canvas = document.getElementById("imagenes");
+	var ctx = canvas.getContext("2d");
+	ctx.font = "30px Arial";
+	ctx.strokeText("Hello World",10,50);
+
+
+       var data;
+       var pics = [];
+       data = new FormData(this);
+
        $("#upload").change(function() {
                $('#activite').text('Upload in progress...');
-                var data = new FormData(this);
-				data.append('pics', $('input[name="pics"]')[0].files);
+          debugger; 
+                if($('input[name="pics"]')[0].files.length != 0)
+                {
+					pics.push($('input[name="pics"]')[0].files);
+					data.append('pics', pics);
 
-				var template = null;
-                      
-                getBase64($('input[name="pics"]')[0].files[0], function(data){
-	                template =
-	                  '<img height="100" height="10%"  src="' + data + '">';
-	                 $('#imagenes').append(template);
-	                  $('#activite').text('Previsualizado');
-                });
+					var template = null;
+
+					var imgs = $('input[name="pics"]')[0].files;
+
+					for(i = 0 ; i <= imgs.length ; i ++ ){
+		                getBase64(imgs[i], function(data){
+			                template =
+			                  '<img height="100" height="10%"  src="' + data + '">';
+			                 $('#imagenes').append(template);
+			                  $('#activite').text('Previsualizado');
+		                });
+					}
+	                      
+
+
+                }  
+                
 
 
                 
@@ -91,7 +156,4 @@
 
 		   };
 		}
-
-
-
 </script>

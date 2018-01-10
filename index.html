@@ -15,7 +15,7 @@
     padding: 14px;
     text-decoration: none;
     height: 130px;
-    width: 300;
+    width: 360;
 
 	   }
 	 .thumbnailc img {
@@ -66,7 +66,7 @@
 <script src="js/jquery.min.js"></script>
 
 <!--   <link rel="stylesheet" href="css/materialize.min.css">  VERY SIMPLE FORM  -->
-<div class="inputDnD">
+<div class=" inputDnD">
     <legend>Subir imagen</legend>
     <form method="post" action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data">
         <input type="hidden" name="post" value="file">
@@ -88,11 +88,6 @@
 <!-- JAVASCRIPT FOR COLOR CHANGE AND AUTO SUBMIT -->
 <script type="text/javascript">
     // Auto send file when input val change
-       var canvas = document.getElementById("imagenes");
-	var ctx = canvas.getContext("2d");
-	ctx.font = "30px Arial";
-	ctx.strokeText("Hello World",10,50);
-
 
        var data;
        var pics = [];

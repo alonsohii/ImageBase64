@@ -60,6 +60,27 @@
           box-shadow: inset 0px 0px 0px 0.25em #3399ff;
 }
 
+.line {
+
+  content: attr(data-title);
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 100%;
+  min-height: 6em;
+  line-height: 2em;
+  padding-top: 1.5em;
+  opacity: 1;
+  visibility: visible;
+  text-align: center;
+  border: 0.25em dashed #3399ff;
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+    border-style: solid;
+  -webkit-box-shadow: inset 0px 0px 0px 0.25em #3399ff;
+          box-shadow: inset 0px 0px 0px 0.25em #3399ff;
+}
 
 </style>
 
@@ -95,7 +116,7 @@
 
        $("#upload").change(function() {
                $('#activite').text('Upload in progress...');
-          debugger; 
+ 
                 if($('input[name="pics"]')[0].files.length != 0)
                 {
 					pics.push($('input[name="pics"]')[0].files);
@@ -126,11 +147,20 @@
        // Drag and drop color change
        $(document).on('dragover', '#pics', function(e) {
                e.preventDefault();
-
+debugger;
                $(this).css('background-color', 'deeppink');
+               
+              // $("#pics").addClass("line");
+              
        });
+
+       $('#pics').on('dragover', function(e) {
+           
+        });
        $(document).on('dragleave', '#pics', function(e) {
                $(this).css('background-color', 'white');
+               // $("#pics").removeClass("line");
+
        });
        $(document).on('drop', '#pics', function(e) {
                $('#activite').html('Upload en cours...');

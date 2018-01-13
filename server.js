@@ -49,6 +49,12 @@ app.get('/demo', (req, res, next)=>{
     res.sendFile(__dirname+'/index.html');
 });
 
+
+
+app.get('/web', (req, res, next)=>{
+    res.sendFile(__dirname+'/web.html');
+});
+
 app.use(express.static(__dirname + '/public'));
 
 app.post('/uploadImg', upload, (req, res, next)=>{

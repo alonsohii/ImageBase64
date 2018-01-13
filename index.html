@@ -23,6 +23,13 @@
 
 	 }
 
+.imgc {
+   background:
+    url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7)
+    no-repeat
+    left center;
+  padding: 5px 0 5px 25px;
+}
 
 
 .inputDnD .form-control-file {
@@ -31,12 +38,10 @@
   height: 200px;
   min-height: 6em;
   outline: none;
-  visibility: hidden;
-  cursor: pointer;
-  background-color: #fff;
-  -webkit-box-shadow: 0 0 5px solid #fff;
+  cursor: pointer;  -webkit-box-shadow: 0 0 5px solid #fff;
           box-shadow: 0 0 5px solid #fff;
 }
+
 .inputDnD .form-control-file:before {
   content: attr(data-title);
   position: absolute;
@@ -83,15 +88,15 @@
 }
 
 </style>
-
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
 <script src="js/jquery.min.js"></script>
 
 <!--   <link rel="stylesheet" href="css/materialize.min.css">  VERY SIMPLE FORM  -->
-<div class=" inputDnD">
+<div class=" inputDnD ">
     <legend>Subir imagen</legend>
-    <form method="post" action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data">
-        <input type="hidden" name="post" value="file">
-        <input type="file" multiple="" name="pics" id="pics" class="form-control-file text-primary font-weight-bold ">
+    <form method="post" action="/uploadImg" name="upload" id="upload" enctype="multipart/form-data" >
+        <input type="hidden" name="post" value="file" class="imgc">
+        <input type="file" multiple="" name="pics" id="pics" class="imgc form-control-file text-primary font-weight-bold ">
         <br>
         <input type="submit" value="Subir" class="waves-effect waves-light btn" id="send">
 
@@ -147,7 +152,7 @@
        // Drag and drop color change
        $(document).on('dragover', '#pics', function(e) {
                e.preventDefault();
-debugger;
+
                $(this).css('background-color', 'deeppink');
                
               // $("#pics").addClass("line");
@@ -181,4 +186,48 @@ debugger;
 
 		   };
 		}
+
+  var drop_items = $('.dnd-onto-website').find('.drop');
+
+  //set up event listeners for the drop item
+  function setUpEventListeners() {
+    drop_items.each(function() {
+      var thisDrop = $(this);
+
+      thisDrop[0].addEventListener('dragenter', dragEnter);
+      thisDrop[0].addEventListener('dragover', dragOver);
+      thisDrop[0].addEventListener('dragleave', dragLeave);
+      thisDrop[0].addEventListener('drop', drop);
+
+    });
+
+  }
+  setUpEventListeners();
+
+		  //called as the draggable enters a droppable 
+  //needs to return false to make droppable area valid
+  function dragEnter(event) {
+
+    var drop = this;
+    $(drop).addClass('drop-active');
+    event.preventDefault();
+
+  }
+
+  //called continually while the draggable is over a droppable 
+  //needs to return false to make droppable area valid
+  function dragOver(event) {
+
+    var drop = this;
+    $(drop).addClass('drop-active');
+    event.preventDefault();
+  }
+
+  //called when the draggable was inside a droppable but then left
+  //  https://bootsnipp.com/snippets/featured/bootstrap-drag-and-drop-upload
+  function dragLeave(event) {
+
+    var drop = this;
+    $(drop).removeClass('drop-active');
+  }
 </script>
